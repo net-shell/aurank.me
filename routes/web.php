@@ -8,8 +8,10 @@ use Inertia\Inertia;
 Route::get('/', \App\Livewire\HomePage::class)->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+    Route::get('home', function () {
+        return Inertia::render('dashboard', [
+            'links' => auth()->user()->links()->latest()->take(5)->get(),
+        ]);
     })->name('dashboard');
 });
 

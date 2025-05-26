@@ -11,7 +11,6 @@ export default defineConfig({
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
         }),
-        react(),
         tailwindcss(),
     ],
     esbuild: {
