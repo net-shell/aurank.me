@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', function () {
         return Inertia::render('home', [
             'links' => Auth::user()->links()->latest()->take(5)->get(),
+            'topLinks' => Link::auRankTop()->get(),
         ]);
     })->name('dashboard');
 });
@@ -63,5 +64,6 @@ Route::get('/links/{link}', function (Link $link) {
     ]);
 })->name('links.show');
 
+require __DIR__ . '/api.php';
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

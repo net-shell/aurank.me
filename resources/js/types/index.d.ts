@@ -39,5 +39,13 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    [key: string]: unknown;
+}
+
+export interface Link {
+    id: number;
+    url: string;
+    user_id: number;
+    ratings_sum_rating?: number;
+    [key: string]: unknown;
 }

@@ -14,12 +14,11 @@ export default function Welcome() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(window.location.origin + '/api/recent-ratings', {
+        fetch('/api/recent-ratings', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-            credentials: 'include'
+            }
         })
             .then(res => {
                 if (!res.ok) {
@@ -31,8 +30,14 @@ export default function Welcome() {
                 setRatings(data);
                 setLoading(false);
             })
-            .catch(error => {
+            .catch(async error => {
                 console.error('Error fetching recent ratings:', error);
+                try {
+                    const errorResponse = await error.response?.text();
+                    console.error('Error response:', errorResponse);
+                } catch (e) {
+                    console.error('Could not parse error response:', e);
+                }
                 setLoading(false);
             });
     }, []);
