@@ -10,7 +10,7 @@ class Link extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'user_id'];
+    protected $fillable = ['url', 'domain', 'user_id'];
     protected $appends = ['au_rank', 'ratings_count'];
 
     public function ratings(): HasMany
@@ -28,6 +28,7 @@ class Link extends Model
         $query->withSum('ratings', 'score')
             ->orderBy('ratings_sum_score', 'desc')
             ->withCount('ratings')
+            ->groupBy('domain')
             ->limit(5);
     }
     public function getAuRankAttribute()
@@ -38,5 +39,11 @@ class Link extends Model
     public function getRatingsCountAttribute()
     {
         return $this->ratings()->count();
+    }
+
+    public function setUrlAttribute($value)
+    {
+        $this->attributes['url'] = $value;
+        $this->attributes['domain'] = parse_url($value, PHP_URL_HOST);
     }
 }

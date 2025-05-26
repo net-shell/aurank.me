@@ -45,7 +45,10 @@ export interface User {
 export interface Link {
     id: number;
     url: string;
+    domain: string;
     user_id: number;
+    au_rank: number;
+    ratings_count: number;
     ratings_sum_rating?: number;
     [key: string]: unknown;
 }
